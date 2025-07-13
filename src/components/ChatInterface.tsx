@@ -57,23 +57,23 @@ const ChatInterface = () => {
 
   const handleSendMessage = async () => {
     if (!inputText.trim()) return;
-
+  
     const userMessage: Message = {
       id: Date.now().toString(),
       text: inputText.trim(),
       isUser: true,
       timestamp: new Date()
     };
-
+  
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
     setIsTyping(true);
-
+  
     // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
     }
-
+  
     try {
       // Connect to backend API
       const data = await sendMessage({
@@ -87,8 +87,19 @@ const ChatInterface = () => {
         isUser: false,
         timestamp: new Date()
       };
-
+  
       setMessages(prev => [...prev, botMessage]);
+      
+      // If session is cancelled, disable input
+      if (data.session_cancelled) {
+        console.log('User session cancelled due to inappropriate behavior');
+        // Disable the input field permanently
+        const textarea = textareaRef.current;
+        if (textarea) {
+          textarea.disabled = true;
+          textarea.placeholder = "Session cancelled due to inappropriate behavior";
+        }
+      }
     } catch (error) {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
