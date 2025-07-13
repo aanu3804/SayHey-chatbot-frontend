@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Heart } from 'lucide-react';
 import ChatMessage from './ChatMessage';
 import TypingIndicator from './TypingIndicator';
+import { sendMessage } from '@/lib/api';
 
 interface Message {
   id: string;
@@ -74,25 +75,15 @@ const ChatInterface = () => {
     }
 
     try {
-      // Simulate API call - replace with actual endpoint
-      const response = await fetch('/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage.text,
-          userId: userId,
-          timestamp: userMessage.timestamp.toISOString()
-        })
+      // Connect to backend API
+      const data = await sendMessage({
+        message: userMessage.text,
+        user_id: userId
       });
-
-      // Simulate delay for demo purposes
-      await new Promise(resolve => setTimeout(resolve, 1500));
-
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I hear you. Thank you for sharing that with me. It takes courage to express your feelings. Would you like to tell me more about what's on your mind? 🌱",
+        text: data.response,
         isUser: false,
         timestamp: new Date()
       };
