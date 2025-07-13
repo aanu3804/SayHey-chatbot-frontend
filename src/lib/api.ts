@@ -1,7 +1,8 @@
 
 const API_BASE_URL = (import.meta as any).env.DEV 
   ? 'http://127.0.0.1:5000' 
-  : 'https://sayhey-chatbot.onrender.com';
+  : 'https://sayhey-chatbot-backend.onrender.com';
+
 
 export interface ChatRequest {
   message: string;
