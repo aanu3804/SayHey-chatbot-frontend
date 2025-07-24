@@ -14,12 +14,6 @@ interface Message {
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "नमस्ते! Hi there! I'm SayHey, your emotional support companion. I'm here to listen and help. How are you feeling today? 💚",
-      isUser: false,
-      timestamp: new Date()
-    }
   ]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
