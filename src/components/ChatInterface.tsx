@@ -98,7 +98,7 @@ const ChatInterface = () => {
       console.error('Error sending message:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm having trouble connecting right now, but I'm still here for you. Please try again in a moment. 💙",
+        text: "I'm having trouble connecting right now, but I'm still here for you. Please try again in a moment. ",
         isUser: false,
         timestamp: new Date()
       };
